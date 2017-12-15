@@ -19,7 +19,7 @@ module ActiveRecordUpsert
 
         cm = arel_table.create_on_conflict_do_update
         cm.target = arel_table[column_name]
-        filter = ->(o) { [*column_arr, 'created_at'].include?(o.name) }
+        filter = ->(o) { [*column_arr, :created_at].include?(o.name) }
 
         cm.set(substitutes.reject { |s| filter.call(s.first) })
         on_conflict_binds = binds.reject(&filter)
